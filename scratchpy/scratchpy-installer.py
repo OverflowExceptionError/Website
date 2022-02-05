@@ -163,10 +163,10 @@ f.close()
 a = requests.get("http://overflowexceptionerror.github.io/Website/scratchpy/local_assets.zip", stream=True)
 from zipfile import ZipFile
 handle = open("C:/ScratchPY/local.zip", "wb")
-for chunk in b.iter_content(chunk_size=512):
+for chunk in a.iter_content(chunk_size=512):
     if chunk:  # filter out keep-alive new chunks
         handle.write(chunk)
 handle.close()
-with ZipFile("C:/ScratchPY/" + datafile, 'r') as zipObj:
+with ZipFile("C:/ScratchPY/local.zip", 'r') as zipObj:
     zipObj.extractall('C:/ScratchPY/local')
 print("Thank you for installing ScratchPY!")
