@@ -1,0 +1,45 @@
+{
+	"version":1,
+	"name":"Generic Program",
+	"publisher":"CappleSoft LTD",
+	"showForeverWindow":"false",
+	"showForeverWindowOnly":"false",
+	"window":{
+		"thread":"false",
+		"width":640,
+		"height":480,
+		"title":"HelloWorld"
+	},
+	"sprites":["sprite1"],
+	"sprite1":{
+		"image":"local/cat.png",
+		"pos":[0,0],
+		"script":{
+			"0":{"type":"startgrp","threaded":"false"},
+			"1":{"type":"flag","stopclicked":"false"},
+			"2":{"type":"moveto","x":100,"y":10},
+			"r":{"type":"wait","seconds":1000},
+			"3":{"type":"moveto","x":0,"y":0},
+			"4":{"type":"forever",
+				"version":3,
+				"name":"thread-1",
+				"publisher":"Forever Block",
+				"window":{
+					"thread":"true",
+					"width":640,
+					"height":480,
+					"title":"Forever Loop Thread"
+				},
+				"script":{
+					"startgrp":{"type":"startgrp","threaded":"true"},
+					"rotate":{"type":"rotate","degrees":45},
+					"2":{"type":"moveto","x":100,"y":10},
+					"r":{"type":"wait","seconds":1000},
+					"3":{"type":"moveto","x":0,"y":0},
+					"endgrp":{"type":"endgrp"}
+				}
+			},
+			"5":{"type":"endgrp"}
+		}
+	}
+}
