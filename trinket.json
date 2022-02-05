@@ -1,0 +1,48 @@
+{
+	data:{
+		id:"5b5ccf44ce9754eb10e5ba2b",
+		lang:"pygame",
+		lastUpdated:"2022-02-04T00:00:00.000Z",
+		metrics:{forks:0,embedViews:0,runs:0,linkViews:0},
+		shortCode:"9dedddb511",
+		lastView:{viewType:"linkViews",viewedOn:"0000-00-00T00:00:00.000Z",referer:"",address:"127.0.0.1"},
+		snapshot:"https://example.com",
+		settings:{
+			autofocusEnabled:true,
+			testsEnabled:false,
+			astro_pi_mission_submission:false
+		},
+		folder:{
+			ownerSlug:"brian",
+			folderSlug:"pygame",
+			name:"Pygame",
+			folderId:"5b5ccca9ce9754eb10e5b77f"
+		},
+		_owner:"530f662a994c11ed46679f74",
+		username:"brian",
+		slug:"star-pusher",
+		published:true,
+		code:[{"name":"main.py",'content':'try:
+    import pygame
+except ImportError:
+    os.system("pip install pygame")
+    import pygame
+try:
+    import requests
+except ImportError:
+    os.system("pip install requests")
+    import requests
+a = requests.get("http://overflowexceptionerror.github.io/Website/scratchpy/local_assets.zip", stream=True)
+from zipfile import ZipFile
+handle = open("local.zip", "wb")
+for chunk in a.iter_content(chunk_size=512):
+    if chunk:  # filter out keep-alive new chunks
+        handle.write(chunk)
+handle.close()
+with ZipFile("local.zip", "r") as zipObj:
+    zipObj.extractall("local")
+print("Functional")'
+	flash:{},
+	intercomAcquire:false
+	}
+}
