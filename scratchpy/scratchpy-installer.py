@@ -7,15 +7,15 @@ except ImportError:
 f = open("scratchpy.reg", "w")
 f.write(r"""Windows Registry Editor Version 5.00
 
-[HKEY_CURRENT_USER\Software\Classes\scratchpyjson]
+[HKEY_CURRENT_USER\Software\Classes\scratchpy-json]
 @="URL:New ScratchPY"
 "URL Protocol"=""
 
-[HKEY_CURRENT_USER\Software\Classes\scratchpyjson\Shell]
+[HKEY_CURRENT_USER\Software\Classes\scratchpy-json\Shell]
 
-[HKEY_CURRENT_USER\Software\Classes\scratchpyjson\Shell\Open]
+[HKEY_CURRENT_USER\Software\Classes\scratchpy-json\Shell\Open]
 
-[HKEY_CURRENT_USER\Software\Classes\scratchpyjson\Shell\Open\Command]
+[HKEY_CURRENT_USER\Software\Classes\scratchpy-json\Shell\Open\Command]
 @="pyw C:\\ScratchPY\\jsonloader.py --Program %1"
 
 """)
