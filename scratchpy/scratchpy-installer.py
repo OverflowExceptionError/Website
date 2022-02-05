@@ -1,22 +1,17 @@
 import os
-try:
-    import requests
-except ImportError:
-    os.system("pip install requests")
-    import requests
 f = open("scratchpy.reg", "w")
 f.write(r"""Windows Registry Editor Version 5.00
 
-[HKEY_CURRENT_USER\Software\Classes\scratchpy-json]
-@="URL:New ScratchPY"
+[HKEY_CURRENT_USER\Software\Classes\scratchpy]
+@="URL:ScratchPY JSON"
 "URL Protocol"=""
 
-[HKEY_CURRENT_USER\Software\Classes\scratchpy-json\Shell]
+[HKEY_CURRENT_USER\Software\Classes\scratchpy\Shell]
 
-[HKEY_CURRENT_USER\Software\Classes\scratchpy-json\Shell\Open]
+[HKEY_CURRENT_USER\Software\Classes\scratchpy\Shell\Open]
 
-[HKEY_CURRENT_USER\Software\Classes\scratchpy-json\Shell\Open\Command]
-@="pyw C:\\ScratchPY\\jsonloader.py --Program %1"
+[HKEY_CURRENT_USER\Software\Classes\scratchpy\Shell\Open\Command]
+@="py C:\\ScratchPY\\v3loader.py --Program %1"
 
 """)
 f.close()
@@ -30,7 +25,7 @@ exit""")
 f.close()
 os.system("batch.bat")
 os.remove("batch.bat")
-f = open("C:/ScratchPY/jsonloader.py", "w")
+f = open("C:/ScratchPY/v3loader.py", "w")
 f.write("""# ScratchPY Online loader
 import os
 try:
@@ -43,6 +38,7 @@ try:
 except ImportError:
     os.system("pip install requests")
     import requests
+import pygame,json,_thread,os,io
 filename = None
 import optparse
 parser = optparse.OptionParser()
@@ -50,28 +46,56 @@ parser.add_option("-p", "--Program", dest="filename")
 (options, args) = parser.parse_args()
 filename = options.filename.split("scratchpy://")
 filename = filename[1].split("/")
-a = requests.get(\'http://overflowexceptionerror.github.io/Website/scratchpy/users/\' + filename[0] + \'/projects/\' + filename[1] + \'.json\'
-f = open(\'code.json\',\'w\')
-f.write(a.text)
-f.close()
-os.chdir(\'C:/ScratchPY\')
-os.system(r\'py C:\\ScratchPY\\client.py\')""")
-f.close()
-f = open("C:/ScratchPY/client.py","w")
-f.write(r"""# ScratchPY JSON
-import pygame
-import json,_thread
+userdata = [filename[0],filename[1]]
+try:
+    # Python2
+    from urllib2 import urlopen
+except ImportError:
+    # Python3
+    from urllib.request import urlopen
 code = {}
-with open('code.json') as f:
+class FakeOpen:
+  def __init__(self,useless):
+    a = requests.get(useless)
+    self.a = a
+    pass
+  def __enter__(self):
+    return self
+  def __exit__(self,u,r,s):
+    print(u)
+    print(self)
+    print(r)
+    print(s)
+    pass
+  def read(self):
+    return self.a.text
+with FakeOpen("http://overflowexceptionerror.github.io/Website/scratchpy/users/" + userdata[0] + "/" + filename[1] + ".json") as f:
     data = json.load(f)
     code = data
+class Image:
+  def __init__(self,username,project,image):
+    # a = requests.get(useless)
+    b = urlopen("http://overflowexceptionerror.github.io/Website/scratchpy/users/" + username + "/" + project + "/" + image).read()
+    file = io.BytesIO(b)
+    self.a = file
+    pass
+  def __enter__(self):
+    return self
+  def __exit__(self,u,r,s):
+    print(u)
+    print(self)
+    print(r)
+    print(s)
+    pass
+  def read(self):
+    return self.a
 if code["showForeverWindowOnly"] == "false":
     window = pygame.display.set_mode((code["window"]["width"],code["window"]["height"]))
     pygame.display.set_caption("ScratchPY Client - " + code["name"] + " by " + code["publisher"])
 sprimages = []
 sprites = []
 for sprite in code["sprites"]:
-    sprimages.append(pygame.image.load(code[sprite]["image"]))
+    sprimages.append(pygame.image.load(Image(code["user"],code["window"]["title"],code[sprite]["image"]).read()))
     sprites.append(sprite)
 # move(X,Y)="move"
 # goto(X,Y)="gotoPos"
@@ -79,7 +103,7 @@ for sprite in code["sprites"]:
 # when (x) happens="startgrp"
 csx = 0
 csy = 0
-currentVersion = 2
+currentVersion = 3
 if code["version"] < currentVersion:
     print("Warning: older code types may be incompatible with the current version.")
 if code["version"] > currentVersion:
@@ -148,7 +172,7 @@ for sprite in sprites:
             pass
 while True:
     if code["showForeverWindowOnly"] == "false":
-        window.fill((255,255,255))
+        window.fill(code["window"]["background"])
         for sprite in sprites:
             for sprit in sprimages:
                 window.blit(sprit,(code[sprite]["pos"][0],code[sprite]["pos"][1]))
@@ -157,16 +181,6 @@ while True:
                 exit()
         pygame.display.update()
     if close == 1:
-        exit()
-""")
+        exit()""")
 f.close()
-a = requests.get("http://overflowexceptionerror.github.io/Website/scratchpy/local_assets.zip", stream=True)
-from zipfile import ZipFile
-handle = open("C:/ScratchPY/local.zip", "wb")
-for chunk in a.iter_content(chunk_size=512):
-    if chunk:  # filter out keep-alive new chunks
-        handle.write(chunk)
-handle.close()
-with ZipFile("C:/ScratchPY/local.zip", 'r') as zipObj:
-    zipObj.extractall('C:/ScratchPY/local')
-print("Thank you for installing ScratchPY!")
+print("Thank you for installing ScratchPY JSON!")
