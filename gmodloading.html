@@ -4,9 +4,13 @@
 <script>
   var realtext = document.getElementById("realtext");
   var jointext = document.getElementById("mapname");
-  function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, language ) {}
+  function GameDetails( servername, serverurl, mapname, maxplayers, steamid, gamemode, volume, language ) {
+    jointext.innerHTML = mapname;
+  }
   function SetFilesTotal( total ) {}
   function DownloadingFile( fileName ) {}
-  function SetStatusChanged( status ) {}
+  function SetStatusChanged( status ) {
+    realtext.innerHTML = status;
+  }
   function SetFilesNeeded( needed ) {}
 </script>
